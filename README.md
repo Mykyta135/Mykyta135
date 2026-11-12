@@ -3,11 +3,15 @@
 Full-stack engineer in Lviv. At Kevych Solutions I'm the main backend developer on client mobile products: an AI fitness coaching app, a kids' streaming app with subscriptions, and a community app that's already live. That code is private, so the pinned repos below are what you can open.
 
 <details>
-<summary><b>What's in the pinned repos</b></summary>
+<summary><b>Projects you can open</b></summary>
 
 | Project | What it is | Stack |
 |---|---|---|
 | [Aegis](https://github.com/Mykyta135/aegis-humanitarian-platform) | My Bachelor's thesis. Coordinates humanitarian aid missions: live volunteer map over WebSockets, route planning, role-based access | NestJS · TypeORM · PostgreSQL · Next.js · Socket.IO · Docker |
+| [MacroTrade](https://github.com/Mykyta135/macrotrade) | Forex swing dashboard: scores pairs through a macro → intermarket → sentiment cascade, AI-written daily reports, hand-rolled KNN | NestJS · PostgreSQL · Next.js · Claude |
+| [Супутник у залі](https://github.com/Mykyta135/silpo-shopping-companion) | Hackathon: AI in-store shopping companion on Silpo's MCP server, from receipts to a store-zone route | NestJS · MCP · AI SDK · Expo · Turborepo |
+| [Money manager](https://github.com/Mykyta135/money-manager) | Local-first finance tracker I use daily: bank API sync, PDF statements, a phone app that reads bank pushes, an MCP server | Next.js · Drizzle · SQLite · Expo |
+| [Garmin dashboard](https://github.com/Mykyta135/garmin_mcp) | Fork of an open-source Garmin MCP server + my SQLite snapshot, morning brief and training dashboard | Python · SQLite · Next.js · Recharts |
 | [NestHexagonalTemplate](https://github.com/Mykyta135/NestHexagonalTemplate) | NestJS starter with ports & adapters, plus Hygen generators that scaffold a whole module | NestJS · TypeORM · Hygen |
 | [flight-booking-api](https://github.com/Mykyta135/flight-booking-api) | Coursework. Flight search, tickets, payments and refunds with JWT auth | NestJS · Prisma · PostgreSQL · Next.js |
 | [CTF_Bot](https://github.com/Mykyta135/CTF_Bot) | Telegram bot I built for BEST::CTF 2024, the first offline CTF in Lviv: registration, teams, admin approval | TypeScript · Prisma · MongoDB · Zod |
