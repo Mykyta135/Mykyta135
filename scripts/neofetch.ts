@@ -14,8 +14,8 @@ const theme = { bg: '#0b0908', border: '#2a2420', text: '#f3ede6', dim: '#8f857a
 
 type Stats = {
   contributionsLastYear: number;
-  commitsAllTime: number;
-  prsAllTime: number;
+  contributionsAllTime: number;
+  since: number;
   publicRepos: number;
   stars: number;
   languages: { name: string; share: number }[];
@@ -62,24 +62,21 @@ async function fetchStats(): Promise<Stats> {
   );
   const u = base.user;
 
-  // contributionsCollection spans at most one year, so walk year by year since the account was created
-  let commitsAllTime = 0;
-  let prsAllTime = 0;
+  // contributionsCollection spans at most one year, so walk year by year since the account was created.
+  // Use the calendar total: private work (Kevych client repos) is in it as an anonymous count, and unlike
+  // the commit/PR split it does not depend on what the token can see.
+  let contributionsAllTime = 0;
   const now = new Date();
   for (let y = new Date(u.createdAt).getUTCFullYear(); y <= now.getUTCFullYear(); y++) {
     const from = new Date(Date.UTC(y, 0, 1)).toISOString();
     const to = new Date(Math.min(Date.UTC(y + 1, 0, 1) - 1, now.getTime())).toISOString();
-    const r = await gql<{ user: { contributionsCollection: { totalCommitContributions: number; totalPullRequestContributions: number; restrictedContributionsCount: number } } }>(
+    const r = await gql<{ user: { contributionsCollection: { contributionCalendar: { totalContributions: number } } } }>(
       `query($login: String!, $from: DateTime!, $to: DateTime!) {
-        user(login: $login) { contributionsCollection(from: $from, to: $to) {
-          totalCommitContributions totalPullRequestContributions restrictedContributionsCount } }
+        user(login: $login) { contributionsCollection(from: $from, to: $to) { contributionCalendar { totalContributions } } }
       }`,
       { login: LOGIN, from, to },
     );
-    const c = r.user.contributionsCollection;
-    // private work (Kevych client repos) only shows up as an anonymous count
-    commitsAllTime += c.totalCommitContributions + c.restrictedContributionsCount;
-    prsAllTime += c.totalPullRequestContributions;
+    contributionsAllTime += r.user.contributionsCollection.contributionCalendar.totalContributions;
   }
 
   const bytes = new Map<string, number>();
@@ -94,8 +91,8 @@ async function fetchStats(): Promise<Stats> {
 
   return {
     contributionsLastYear: u.contributionsCollection.contributionCalendar.totalContributions,
-    commitsAllTime,
-    prsAllTime,
+    contributionsAllTime,
+    since: new Date(u.createdAt).getUTCFullYear(),
     publicRepos: u.repositories.totalCount,
     stars: u.repositories.nodes.reduce((a, r) => a + r.stargazerCount, 0),
     languages,
@@ -137,7 +134,7 @@ function infoLines(s: Stats, now: Date): Line[] {
     { blank: true },
     { title: 'github' },
     { key: 'Contribs', value: `${fmt(s.contributionsLastYear)} in the last year` },
-    { key: 'Commits', value: `${fmt(s.commitsAllTime)} all time · ${fmt(s.prsAllTime)} PRs` },
+    { key: 'All time', value: `${fmt(s.contributionsAllTime)} since ${s.since}` },
     { key: 'Repos', value: s.stars >= 10 ? `${s.publicRepos} public · ${fmt(s.stars)} ★` : `${s.publicRepos} public` },
     { key: 'Langs', value: s.languages.map((l) => `${l.name} ${Math.round(l.share * 100)}%`).join(' · ') },
     { blank: true },
