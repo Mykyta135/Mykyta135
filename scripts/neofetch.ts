@@ -129,7 +129,7 @@ function infoLines(s: Stats, now: Date): Line[] {
     { key: 'Frontend', value: 'Next.js · React · React Native' },
     { key: 'Infra', value: 'Docker · AWS ECS · GitHub Actions' },
     { key: 'Shell', value: 'zsh + Claude Code' },
-    { key: 'Location', value: 'Lviv, UA · open to remote EU' },
+    { key: 'Location', value: 'Lviv, Ukraine' },
     { key: 'Off-clock', value: 'BEST Lviv: CTF, hackathons, BEC' },
     { blank: true },
     { title: 'github' },
