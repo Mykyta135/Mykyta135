@@ -1,0 +1,55 @@
+name: profile
+
+on:
+  schedule:
+    - cron: '17 3 * * *' # daily, 05:17 Kyiv
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['scripts/**', 'assets/portrait.json', '.github/workflows/profile.yml']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile
+  cancel-in-progress: false
+
+jobs:
+  neofetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: node scripts/neofetch.ts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit the card if it changed
+        run: |
+          git add assets/neofetch.svg
+          git diff --cached --quiet && exit 0
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'chore: refresh neofetch card'
+          git push
+
+  snake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/snake-light.svg?color_snake=#c4561a&color_dots=#ebedf0,#ffd6b8,#ffb37a,#ff9147,#c4561a
+            dist/snake-dark.svg?color_snake=#ff9147&color_dots=#161b22,#4a2410,#8a3d12,#c4561a,#ff9147
+      - uses: crazy-max/ghaction-github-pages@v5
+        with:
+          target_branch: output
+          build_dir: dist
+          commit_message: 'chore: refresh contribution snake'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
