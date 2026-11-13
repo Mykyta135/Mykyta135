@@ -13,10 +13,11 @@ Full-stack engineer in Lviv. At Kevych Solutions I'm the main backend developer 
 | [Money manager](https://github.com/Mykyta135/money-manager) | Local-first finance tracker I use daily: bank API sync, PDF statements, a phone app that reads bank pushes, an MCP server | Next.js · Drizzle · SQLite · Expo |
 | [Garmin dashboard](https://github.com/Mykyta135/garmin_mcp) | Fork of an open-source Garmin MCP server + my SQLite snapshot, morning brief and training dashboard | Python · SQLite · Next.js · Recharts |
 | [NestHexagonalTemplate](https://github.com/Mykyta135/NestHexagonalTemplate) | NestJS starter with ports & adapters, plus Hygen generators that scaffold a whole module | NestJS · TypeORM · Hygen |
-| [flight-booking-api](https://github.com/Mykyta135/flight-booking-api) | Coursework. Flight search, tickets, payments and refunds with JWT auth | NestJS · Prisma · PostgreSQL · Next.js |
 | [CTF_Bot](https://github.com/Mykyta135/CTF_Bot) | Telegram bot I built for BEST::CTF 2024, the first offline CTF in Lviv: registration, teams, admin approval | TypeScript · Prisma · MongoDB · Zod |
 | [CTF_Website](https://github.com/Mykyta135/CTF_Website) | The website for the same event | Next.js · Tailwind |
 | [DynamicQueryParams](https://github.com/Mykyta135/DynamicQueryParams) | NestJS decorators for pagination, sorting and filtering from query params | NestJS |
+
+In November 2026 I reviewed these repositories for security before putting them on my CV: secret scans of the full history, authorization checks route by route, fixes with tests. What I found, fixed and left as a known limit is in each repo's `SECURITY.md`. Old coursework I did not fix is archived.
 
 </details>
 
